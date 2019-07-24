@@ -32,20 +32,15 @@ const Header = ({ classes }) => {
                                 src={currentUser.picture}
                                 alt={currentUser.name}
                             />
-                            <Typography 
-                              variant='h5'
-                              color="inherit"
-                              noWrap
-                            >
-                              {currentUser.name}
+                            <Typography variant="h5" color="inherit" noWrap>
+                                {currentUser.name}
                             </Typography>
                         </div>
                     )}
 
                     {/* Signout Button */}
 
-                    <Signout/>
-
+                    <Signout />
                 </Toolbar>
             </AppBar>
         </div>

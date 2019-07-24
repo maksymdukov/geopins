@@ -16,7 +16,7 @@ const Root = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
     return (
         <Router>
-            <Context.Provider value={{state, dispatch}}>
+            <Context.Provider value={{ state, dispatch }}>
                 <Switch>
                     <ProtectedRoute exact path="/" component={App} />
                     <Route path="/login" component={Splash} />
