@@ -11,15 +11,22 @@ const Login = ({ classes }) => {
     const onSuccess = async googleUser => {
         try {
             const idToken = googleUser.getAuthResponse().id_token;
-            const client = new GraphQLClient("http://localhost:4000/graphql", {
+            const url =
+                process.env.NODE_ENV === "production"
+                    ? "https://geo-pins-max.herokuapp.com/graphql"
+                    : "http://localhost:4000/graphql";
+            const client = new GraphQLClient(url, {
                 headers: { authorization: idToken }
             });
             const { me } = await client.request(ME_QUERY);
             dispatch({ type: "LOGIN_USER", payload: me });
-            dispatch({type: "IS_LOGGED_IN", payload: googleUser.isSignedIn()});
+            dispatch({
+                type: "IS_LOGGED_IN",
+                payload: googleUser.isSignedIn()
+            });
         } catch (error) {
             onFailure(error);
-            dispatch({type: "IS_LOGGED_IN", payload: false});
+            dispatch({ type: "IS_LOGGED_IN", payload: false });
         }
     };
 
