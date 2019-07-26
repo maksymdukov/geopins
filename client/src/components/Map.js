@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
-import {unstable_useMediaQuery as useMediaQuery} from "@material-ui/core/useMediaQuery";
+import { unstable_useMediaQuery as useMediaQuery } from "@material-ui/core/useMediaQuery";
 import PinIcon from "./PinIcon";
 import Context from "../context";
 import Blog from "./Blog";
@@ -37,6 +37,15 @@ const Map = ({ classes }) => {
         getUserPosition();
     }, []);
     const [popup, setPopup] = useState(null);
+    // remove popup if pin itself is deleted by the author of the pin
+
+    useEffect(() => {
+        const pinExists =
+            popup && state.pins.findIndex(pin => pin._id === popup._id) > -1;
+        if (!pinExists) {
+            setPopup(null);
+        }
+    }, [state.pins.length]);
 
     const getPins = async () => {
         const { getPins } = await getClient().request(GET_PINS_QUIERY);

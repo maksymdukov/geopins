@@ -55,10 +55,14 @@ const reducer = (state, { type, payload }) => {
                 draft: null
             };
         case "DELETE_PIN":
+            let isCurrentPin;
+            if (state.currentPin) {
+                isCurrentPin = payload._id === state.currentPin._id;
+            }
             return {
                 ...state,
                 pins: state.pins.filter(pin => pin._id !== payload._id),
-                currentPin: null,
+                currentPin: isCurrentPin ? null : state.currentPin,
                 draft: null
             };
         case "CREATE_COMMENT":
